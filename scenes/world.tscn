@@ -1,0 +1,113 @@
+[gd_scene load_steps=21 format=3 uid="uid://c7l83hu3qqfab"]
+
+[ext_resource type="Script" path="res://scripts/world/world.gd" id="1_gkyem"]
+[ext_resource type="Shader" path="res://materials/planet_ground.gdshader" id="1_i88bl"]
+[ext_resource type="VoxelGeneratorGraph" uid="uid://bdkons750aky1" path="res://scripts/world/voxel_graph_planet_v4.tres" id="1_rxt6g"]
+[ext_resource type="Texture2D" uid="uid://jfywo4xd75ku" path="res://textures/Rocks07_col.webp" id="2_25bps"]
+[ext_resource type="Texture2D" uid="uid://q00sxk0oimuv" path="res://textures/space_background.png" id="2_n838u"]
+[ext_resource type="Texture2D" uid="uid://dvpf64ui03kn5" path="res://textures/Rocks07_nrm.webp" id="3_bvte1"]
+[ext_resource type="Texture2D" uid="uid://dq0s3scgs2ncg" path="res://textures/grass_albedo.png" id="4_tjvu3"]
+[ext_resource type="Texture2D" uid="uid://ksj4nnvstubh" path="res://textures/grass_normal.png" id="5_0gcue"]
+[ext_resource type="PackedScene" uid="uid://c36velgas3n3k" path="res://addons/zylann.atmosphere/planet_atmosphere.tscn" id="7_4wkud"]
+[ext_resource type="Shader" path="res://addons/zylann.atmosphere/shaders/planet_atmosphere_v1_clouds.gdshader" id="8_5go2j"]
+[ext_resource type="NoiseTexture3D" uid="uid://cudqtkcf6wrj2" path="res://atmosphere/noise_texture_3d.res" id="9_w2dgn"]
+[ext_resource type="Cubemap" uid="uid://dxg8ujayqjxyo" path="res://atmosphere/cloud_coverage_earth.tres" id="10_emwew"]
+[ext_resource type="PackedScene" uid="uid://b48cw6a8ty57j" path="res://scenes/vab.tscn" id="13_tk8pn"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3anpg"]
+panorama = ExtResource("2_n838u")
+
+[sub_resource type="Sky" id="Sky_5lajd"]
+sky_material = SubResource("PanoramaSkyMaterial_3anpg")
+
+[sub_resource type="Environment" id="Environment_b3pix"]
+background_mode = 2
+sky = SubResource("Sky_5lajd")
+ambient_light_color = Color(0.337255, 0.643137, 0.8, 1)
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="VoxelMesherTransvoxel" id="VoxelMesherTransvoxel_ocoxg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0f4nc"]
+render_priority = 0
+shader = ExtResource("1_i88bl")
+shader_parameter/u_transition_mask = null
+shader_parameter/u_lod_fade = null
+shader_parameter/u_voxel_virtual_texture_tile_size = null
+shader_parameter/u_voxel_virtual_texture_fade = null
+shader_parameter/u_voxel_cell_size = null
+shader_parameter/u_voxel_block_size = null
+shader_parameter/u_voxel_virtual_texture_offset_scale = null
+shader_parameter/u_mountain_height = 10000.0
+shader_parameter/u_top_modulate = Color(1, 1, 1, 1)
+shader_parameter/u_block_local_transform = null
+shader_parameter/u_top_albedo_texture = ExtResource("4_tjvu3")
+shader_parameter/u_top_normal_texture = ExtResource("5_0gcue")
+shader_parameter/u_side_albedo_texture = ExtResource("2_25bps")
+shader_parameter/u_side_normal_texture = ExtResource("3_bvte1")
+
+[sub_resource type="BoxMesh" id="BoxMesh_5bhjr"]
+size = Vector3(15, 2.5, 15)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_bh8bt"]
+data = PackedVector3Array(-7.5, 1.25, 7.5, 7.5, 1.25, 7.5, -7.5, -1.25, 7.5, 7.5, 1.25, 7.5, 7.5, -1.25, 7.5, -7.5, -1.25, 7.5, 7.5, 1.25, -7.5, -7.5, 1.25, -7.5, 7.5, -1.25, -7.5, -7.5, 1.25, -7.5, -7.5, -1.25, -7.5, 7.5, -1.25, -7.5, 7.5, 1.25, 7.5, 7.5, 1.25, -7.5, 7.5, -1.25, 7.5, 7.5, 1.25, -7.5, 7.5, -1.25, -7.5, 7.5, -1.25, 7.5, -7.5, 1.25, -7.5, -7.5, 1.25, 7.5, -7.5, -1.25, -7.5, -7.5, 1.25, 7.5, -7.5, -1.25, 7.5, -7.5, -1.25, -7.5, 7.5, 1.25, 7.5, -7.5, 1.25, 7.5, 7.5, 1.25, -7.5, -7.5, 1.25, 7.5, -7.5, 1.25, -7.5, 7.5, 1.25, -7.5, -7.5, -1.25, 7.5, 7.5, -1.25, 7.5, -7.5, -1.25, -7.5, 7.5, -1.25, 7.5, 7.5, -1.25, -7.5, -7.5, -1.25, -7.5)
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_gkyem")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_b3pix")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+shadow_enabled = true
+
+[node name="VoxelLodTerrain" type="VoxelLodTerrain" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 81.7456, 0, 0)
+generator = ExtResource("1_rxt6g")
+mesher = SubResource("VoxelMesherTransvoxel_ocoxg")
+view_distance = 16384
+voxel_bounds = AABB(-16384, -16384, -16384, 32768, 32768, 32768)
+lod_count = 7
+material = SubResource("ShaderMaterial_0f4nc")
+use_gpu_generation = true
+
+[node name="PlanetAthmosphere" parent="." instance=ExtResource("7_4wkud")]
+planet_radius = 6371.0
+atmosphere_height = 1000.0
+sun_path = NodePath("../DirectionalLight3D")
+custom_shader = ExtResource("8_5go2j")
+shader_params/u_density = 0.001
+shader_params/u_day_color0 = Color(0.5, 0.8, 1, 1)
+shader_params/u_day_color1 = Color(0.5, 0.8, 1, 1)
+shader_params/u_night_color0 = Color(0.2, 0.4, 0.8, 1)
+shader_params/u_night_color1 = Color(0.2, 0.4, 0.8, 1)
+shader_params/u_day_night_transition_scale = 2.0
+shader_params/u_cloud_shape_invert = 1.0
+shader_params/u_cloud_coverage_bias = 0.05
+shader_params/u_cloud_shape_factor = 0.4
+shader_params/u_cloud_shape_scale = 0.002
+shader_params/u_cloud_density_scale = 0.005
+shader_params/u_cloud_bottom = 0.2
+shader_params/u_cloud_top = 0.5
+shader_params/u_cloud_blend = 0.5
+shader_params/u_cloud_shape_texture = ExtResource("9_w2dgn")
+shader_params/u_cloud_coverage_cubemap = ExtResource("10_emwew")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 6443.06, 0)
+
+[node name="VoxelViewer" type="VoxelViewer" parent="Camera3D"]
+
+[node name="start_table" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6438.58, 0)
+mesh = SubResource("BoxMesh_5bhjr")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="start_table"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="start_table/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_bh8bt")
+
+[node name="vab" parent="." instance=ExtResource("13_tk8pn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6446.5, 0)

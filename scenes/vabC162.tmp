@@ -1,0 +1,58 @@
+[gd_scene load_steps=5 format=3 uid="uid://b48cw6a8ty57j"]
+
+[ext_resource type="Script" path="res://scripts/vab/ui.gd" id="1_2hpwc"]
+[ext_resource type="Script" path="res://scripts/vab/vab.gd" id="1_va82g"]
+[ext_resource type="PackedScene" uid="uid://b3vk6llhdr7ac" path="res://scenes/vab/part.tscn" id="2_csx0u"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0cg12"]
+
+[node name="vab" type="Node3D"]
+script = ExtResource("1_va82g")
+
+[node name="camera" type="Marker3D" parent="."]
+
+[node name="camera" type="Camera3D" parent="camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+current = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ui" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2hpwc")
+
+[node name="parts_panel" type="Panel" parent="CanvasLayer/ui"]
+layout_mode = 0
+offset_right = 293.0
+offset_bottom = 648.0
+
+[node name="parts_panel_container" type="HBoxContainer" parent="CanvasLayer/ui/parts_panel"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="parts_types_container" type="VBoxContainer" parent="CanvasLayer/ui/parts_panel/parts_panel_container"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="separator" type="Panel" parent="CanvasLayer/ui/parts_panel/parts_panel_container"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="parts_container" type="GridContainer" parent="CanvasLayer/ui/parts_panel/parts_panel_container"]
+layout_mode = 2
+
+[node name="cursor" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_0cg12")
+
+[node name="part" parent="." instance=ExtResource("2_csx0u")]

@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bf6c0vnrub4cd"]
+
+[ext_resource type="Shader" path="res://resources/vab/part_hover_material.gdshader" id="1_mhcga"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_mhcga")
+shader_parameter/outline_color = Color(0.780392, 0.815686, 0.8, 0.658824)
+shader_parameter/outline_width = 3.0
