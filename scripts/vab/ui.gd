@@ -5,6 +5,8 @@ extends Control
 @onready var parts_types_container = $parts_panel/parts_panel_container/parts_types_container
 @onready var parts_container = $parts_panel/parts_panel_container/parts_container
 
+var is_mouse_hover: bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	load_parts_types()
@@ -38,4 +40,37 @@ func load_parts(type: String) -> void:
 		
 		parts_container.add_child(part_button)
 
+func _input(event):
+	if Input.is_action_just_pressed("grab"):
+		if is_mouse_hover:
+			print(vab.grabbed_part)
+			var check_part = vab.grabbed_part
+			if check_part != null:
+				# Вызываем функцию для удаления вложенных узлов
+				remove_connected_parts(check_part)
+				check_part.queue_free()
 
+# Рекурсивная функция для удаления вложенных узлов
+func remove_connected_parts(part: StaticBody3D) -> void:
+	if part.bottom_attach_node_name != null:
+		# Получаем узел, который нужно удалить
+		var connected_node = get_tree().get_nodes_in_group(part.bottom_attach_node_name)[0]
+		connected_node.top_attach_node_name = null
+		part.top_attach_node_name = null
+		connected_node.bottom_attach_node_name = null
+		part.bottom_attach_node_name = null
+		# Рекурсивный вызов для удаления вложенных узлов
+		remove_connected_parts(connected_node)
+		# Удаляем текущий узел
+		connected_node.queue_free()
+	else:
+		# Если нет вложенных узлов, просто удаляем текущий узел
+		part.queue_free()
+
+	
+func _on_parts_panel_mouse_entered():
+	is_mouse_hover = true
+
+
+func _on_parts_panel_mouse_exited():
+	is_mouse_hover = false
