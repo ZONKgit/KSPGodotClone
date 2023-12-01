@@ -10,7 +10,7 @@ func create_part(type: String, part: String) -> void:
 	var part_data = LoadGame.get_part_data(type, part)
 	var _part = preload("res://scenes/vab/part.tscn").instantiate()
 	add_child(_part)
-	_part.part_settings(part_data.mesh, part_data.name, part_data.attach_points)
+	_part.part_settings(part_data.mesh, part_data.name, part_data.top_attach_point, part_data.bottom_attach_point)
 
 func _input(event):
 	if event is InputEventMouseMotion:

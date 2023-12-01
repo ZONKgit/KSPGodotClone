@@ -1,4 +1,5 @@
 {
 	"name" : "Mk1",
-	"attach_points" : [[0,0.645,0, "min"], [0,-0.465,0, "norm"]]
+	"top_attach_point" : [0,0.645,0, "min"],
+	"bottom_attach_point" : [0,-0.465,0, "norm"]
 }

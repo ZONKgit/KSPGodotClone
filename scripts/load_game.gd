@@ -22,7 +22,8 @@ func load_game() -> void:
 			parts[part] = {
 				"name" : part_config.name,
 				"mesh" : part_model,
-				"attach_points" : part_config.attach_points
+				"top_attach_point" : part_config.top_attach_point,
+				"bottom_attach_point" : part_config.bottom_attach_point
 			}
 			
 		parts_data[part_type] = parts
