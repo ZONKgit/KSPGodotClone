@@ -16,12 +16,24 @@ var bottom_attach_node_name
 
 # Присоеденение другой детали к этой
 func connect_part(part: StaticBody3D, dir: String) -> void:
-	print(part in get_children())
+	if dir == "top" && top_attach_node_name != null: return
+	if dir == "bottom" && bottom_attach_node_name != null: return
+	
 	if !part in get_children() && !self in part.get_children():
 		var _old_pos = part.global_position
 		vab.remove_child(part)
 		add_child(part)
 		part.global_position = _old_pos
+		
+		if dir == "top":
+			top_attach_node_name = part.name
+		elif dir == "bottom":
+			bottom_attach_node_name = part.name
+			
+		if dir == "top":
+			part.bottom_attach_node_name = part.name
+		elif dir == "bottom":
+			part.top_attach_node_name = part.name
 
 # Отсоеденение другой детали от этой
 func disconnect_part(part: StaticBody3D, dir: String) -> void:
@@ -30,6 +42,16 @@ func disconnect_part(part: StaticBody3D, dir: String) -> void:
 		remove_child(part)
 		vab.add_child(part)
 		part.global_position = _old_pos
+		
+		if dir == "top":
+			top_attach_node_name = null
+		elif dir == "bottom":
+			bottom_attach_node_name = null
+			
+		if dir == "top":
+			part.bottom_attach_node_name = null
+		elif dir == "bottom":
+			part.top_attach_node_name = null
 
 func part_settings(part_mesh: Mesh, part_name: String, top_attach_point: Array, bottom_attach_point: Array):
 	mesh_instance.mesh = part_mesh
@@ -104,7 +126,6 @@ func _process(delta):
 					# К нижней
 					top_to_bottom_dist = node.bottom_attach_point.global_position.distance_to(top_attach_point.global_position)
 					if top_to_bottom_dist < 0.6:
-						var relative_position = top_attach_point.global_position - global_position
 						global_position = node.global_position - node.top_attach_point.position - top_attach_point.position
 						node.connect_part(self, "bottom")
 					else: # Отсоеденение связи соеденения этой и рядом находящийся ноды
@@ -113,7 +134,6 @@ func _process(delta):
 					# К верхней
 					bottom_to_top_dist = node.top_attach_point.global_position.distance_to(bottom_attach_point.global_position)
 					if bottom_to_top_dist < 0.6:
-						var relative_position = bottom_attach_point.global_position - global_position
 						global_position = node.global_position - node.bottom_attach_point.position - bottom_attach_point.position
 						node.connect_part(self, "top")
 					else:# Отсоеденение связи соеденения этой и рядом находящийся ноды
