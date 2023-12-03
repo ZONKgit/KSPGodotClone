@@ -1,0 +1,6 @@
+{
+	"name" : "radialDecoupler",
+	"type" : "decoupler",
+	"top_attach_point" : [0,0,-0.05, "norm"],
+	"bottom_attach_point" : [0,0,0.05, "norm"]
+}

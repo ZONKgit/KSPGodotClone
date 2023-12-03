@@ -1,14 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b3vk6llhdr7ac"]
+[gd_scene load_steps=2 format=3 uid="uid://b3vk6llhdr7ac"]
 
-[ext_resource type="ArrayMesh" uid="uid://c1ovwx2k17j6i" path="res://Parts/command/mk1/model.obj" id="1_7ogdi"]
 [ext_resource type="Script" path="res://scripts/vab/part.gd" id="1_i0e4v"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yfris"]
-albedo_color = Color(0.333333, 0.509804, 0.733333, 1)
 
 [node name="part" type="StaticBody3D" groups=["part"]]
 script = ExtResource("1_i0e4v")
 
 [node name="mesh" type="MeshInstance3D" parent="."]
-mesh = ExtResource("1_7ogdi")
-surface_material_override/0 = SubResource("StandardMaterial3D_yfris")

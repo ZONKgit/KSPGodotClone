@@ -6,13 +6,10 @@ extends Marker3D
 var sensitivity = 0.003
 var camera_speed = 0.5
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+var time: float = 0.0
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	time += delta * 0.01
 
 func _input(e):
 	if Input.is_key_pressed(KEY_SHIFT):
@@ -30,16 +27,16 @@ func _input(e):
 	if Input.is_key_pressed(KEY_SHIFT):
 		if e is InputEventMouseButton:
 			if e.pressed:
-				if Input.is_action_just_pressed("vab_camera_up") && camera.transform.origin.z > 0:
+				if Input.is_action_just_pressed("vab_camera_up") && camera.transform.origin.z > -30:
 					camera.transform.origin.z -= camera_speed
 					camera_orthogonal.transform.origin.z -= camera_speed
-				if Input.is_action_just_pressed("vab_camera_down"):
+				if Input.is_action_just_pressed("vab_camera_down") && camera.transform.origin.z < 30:
 					camera.transform.origin.z += camera_speed
 					camera_orthogonal.transform.origin.z += camera_speed
 				camera_orthogonal.size = transform.origin.z*(4/9)
 	elif e is InputEventMouseButton:
-		if e.pressed && camera.transform.origin.z < 10:
-			if Input.is_action_just_pressed("vab_camera_up"):
+		if e.pressed:
+			if Input.is_action_just_pressed("vab_camera_up")  && camera.transform.origin.y > -30:
 				transform.origin.y += camera_speed
-			if Input.is_action_just_pressed("vab_camera_down"):
+			if Input.is_action_just_pressed("vab_camera_down")  && camera.transform.origin.y < 30:
 				transform.origin.y -= camera_speed

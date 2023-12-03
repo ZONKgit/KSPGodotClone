@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1i18auhgqamt"]
+
+[ext_resource type="PackedScene" uid="uid://mbukhu46p62t" path="res://scenes/part/EmptyPart.tscn" id="1_vgts6"]
+[ext_resource type="Script" path="res://scripts/part_class/fuel_tank.gd" id="2_hdyua"]
+
+[node name="emptyFuelTank" instance=ExtResource("1_vgts6")]
+script = ExtResource("2_hdyua")

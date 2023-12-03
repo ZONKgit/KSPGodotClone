@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://mbukhu46p62t"]
+
+[ext_resource type="Script" path="res://scripts/part.gd" id="1_ku1bd"]
+
+[node name="EmptyPart" type="RigidBody3D"]
+script = ExtResource("1_ku1bd")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]

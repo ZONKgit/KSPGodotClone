@@ -8,42 +8,20 @@ extends StaticBody3D
 
 var is_grabbed: bool = false # Схвачен объект
 var is_hover: bool = false # Наведено на объект
+var link = null
 var top_attach_point
 var bottom_attach_point
-var top_attach_node_name
-var bottom_attach_node_name
-
-func get_connection_node(dir: String):
-	if dir == "top":
-		if get_tree().get_nodes_in_group(top_attach_node_name).size() == 0:
-			queue_free()
-			return self
-		else:
-			return get_tree().get_nodes_in_group(top_attach_node_name)[0]
-			
-	# bottom еще не использовалось поэтому нету условия
 
 # Присоеденение другой детали к этой
-func connect_part(part: StaticBody3D, dir: String) -> void:
-	if dir == "top":
-		top_attach_node_name = part.name
-		part.bottom_attach_node_name = name
-	elif dir == "bottom":
-		bottom_attach_node_name = part.name
-		part.top_attach_node_name = name
-
+func connect_part(part: StaticBody3D) -> void:
+	if link == null: link = part
 # Отсоеденение другой детали от этой
-func disconnect_part(part: StaticBody3D, dir: String) -> void:
-	if dir == "top":
-		top_attach_node_name = null
-		part.bottom_attach_node_name = null
-	else:
-		bottom_attach_node_name = null
-		part.top_attach_node_name = null
+func disconnect_part(part: StaticBody3D) -> void:
+	link = null
 
 func part_settings(part_mesh: Mesh, part_name: String, top_attach_point: Array, bottom_attach_point: Array):
 	mesh_instance.mesh = part_mesh
-	name = part_name
+	name = part_name+"_"+str(vab.get_child_count()+randi_range(0,99999))
 	# Доабвление материала
 	mesh_instance.material_overlay = part_hover_material.duplicate()
 	# Создание коллизии
@@ -98,19 +76,13 @@ func part_settings(part_mesh: Mesh, part_name: String, top_attach_point: Array, 
 	self.bottom_attach_point = bottom_attach_mesh_instance
 
 func _process(delta):
-	if !is_grabbed:
-		if top_attach_node_name != null:
-			global_position = get_connection_node("top").global_position+bottom_attach_point.position+bottom_attach_point.position
 	# Объект схвачен
 	if is_grabbed:
 		#Двигать объект
 		global_position = vab.cursor_position
 		
-		
-		
 		# Соеденение нод
 		var top_to_bottom_dist = Vector3(0,0,0)
-		var bottom_to_top_dist = Vector3(0,0,0)
 		for node in get_tree().get_nodes_in_group("part"):
 			if node != self:
 				# К нижней
@@ -118,19 +90,10 @@ func _process(delta):
 				if top_to_bottom_dist < 0.6:
 					var relative_position = top_attach_point.global_position - global_position
 					global_position = node.global_position - node.top_attach_point.position - top_attach_point.position
-					node.connect_part(self, "bottom")
+					node.connect_part(self)
 				else: # Отсоеденение связи соеденения этой и рядом находящийся ноды
-					node.disconnect_part(self, "bottom")
-				
-				# К верхней
-				if node.is_grabbed:
-					bottom_to_top_dist = node.top_attach_point.global_position.distance_to(bottom_attach_point.global_position)
-					if bottom_to_top_dist < 0.6:
-						var relative_position = bottom_attach_point.global_position - global_position
-						global_position = node.global_position - node.bottom_attach_point.position - bottom_attach_point.position
-						node.connect_part(self, "top")
-					else:# Отсоеденение связи соеденения этой и рядом находящийся ноды
-						node.disconnect_part(self, "top")
+					node.disconnect_part(self)
+
 		#Отпустить объект
 		if Input.is_action_just_pressed("grab"):
 			set_is_grabed(!is_grabbed)

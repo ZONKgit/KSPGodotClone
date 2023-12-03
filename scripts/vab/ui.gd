@@ -52,20 +52,7 @@ func _input(event):
 
 # Рекурсивная функция для удаления вложенных узлов
 func remove_connected_parts(part: StaticBody3D) -> void:
-	if part.bottom_attach_node_name != null:
-		# Получаем узел, который нужно удалить
-		var connected_node = get_tree().get_nodes_in_group(part.bottom_attach_node_name)[0]
-		connected_node.top_attach_node_name = null
-		part.top_attach_node_name = null
-		connected_node.bottom_attach_node_name = null
-		part.bottom_attach_node_name = null
-		# Рекурсивный вызов для удаления вложенных узлов
-		remove_connected_parts(connected_node)
-		# Удаляем текущий узел
-		connected_node.queue_free()
-	else:
-		# Если нет вложенных узлов, просто удаляем текущий узел
-		part.queue_free()
+	part.queue_free()
 
 	
 func _on_parts_panel_mouse_entered():
@@ -74,3 +61,11 @@ func _on_parts_panel_mouse_entered():
 
 func _on_parts_panel_mouse_exited():
 	is_mouse_hover = false
+
+
+func _on_save_ship_button_pressed():
+	vab.save_ship()
+
+
+func _on_launch_button_pressed():
+	vab.launch_ship()

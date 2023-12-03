@@ -27,7 +27,7 @@ func load_game() -> void:
 			}
 			
 		parts_data[part_type] = parts
-	print(parts_data)
+	#print(parts_data)
 
 func get_parts_types_in_derictory():
 	var dir = DirAccess
@@ -47,3 +47,17 @@ func get_parts(type: String):
 
 func get_part_data(type:String, part:String):
 	return parts_data[type][part]
+
+func get_part_data_by_name(part: String):
+	return get_part_data(get_part_type_by_name(part), part)
+
+func get_part_type_by_name(part):
+	for part_type in parts_data.keys():
+		if parts_data[part_type].has(part):
+			return part_type
+
+func has_part_by_name(part) -> bool:
+	for part_type in parts_data.keys():
+		if parts_data[part_type].has(part):
+			return true
+	return false

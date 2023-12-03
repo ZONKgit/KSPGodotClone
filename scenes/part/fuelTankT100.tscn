@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwppgi1ujgtsa"]
+
+[ext_resource type="PackedScene" uid="uid://b1i18auhgqamt" path="res://scenes/part/emptyFuelTank.tscn" id="1_mdxe3"]
+[ext_resource type="ArrayMesh" uid="uid://bsdh8u1v5e0v1" path="res://Parts/fuelTank/F-100/model.obj" id="2_m7r8t"]
+
+[node name="fuelTankT100" instance=ExtResource("1_mdxe3")]
+fuel = 10.0
+
+[node name="MeshInstance3D" parent="." index="0"]
+mesh = ExtResource("2_m7r8t")

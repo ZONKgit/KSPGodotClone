@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c7l83hu3qqfab"]
+[gd_scene load_steps=23 format=3 uid="uid://c7l83hu3qqfab"]
 
 [ext_resource type="Script" path="res://scripts/world/world.gd" id="1_gkyem"]
 [ext_resource type="Shader" path="res://materials/planet_ground.gdshader" id="1_i88bl"]
@@ -12,7 +12,7 @@
 [ext_resource type="Shader" path="res://addons/zylann.atmosphere/shaders/planet_atmosphere_v1_clouds.gdshader" id="8_5go2j"]
 [ext_resource type="NoiseTexture3D" uid="uid://cudqtkcf6wrj2" path="res://atmosphere/noise_texture_3d.res" id="9_w2dgn"]
 [ext_resource type="Cubemap" uid="uid://dxg8ujayqjxyo" path="res://atmosphere/cloud_coverage_earth.tres" id="10_emwew"]
-[ext_resource type="PackedScene" uid="uid://b48cw6a8ty57j" path="res://scenes/vab.tscn" id="13_tk8pn"]
+[ext_resource type="PackedScene" uid="uid://nvf06v2vrvb8" path="res://scenes/space_ship.tscn" id="13_3jw4d"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3anpg"]
 panorama = ExtResource("2_n838u")
@@ -53,17 +53,25 @@ size = Vector3(15, 2.5, 15)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_bh8bt"]
 data = PackedVector3Array(-7.5, 1.25, 7.5, 7.5, 1.25, 7.5, -7.5, -1.25, 7.5, 7.5, 1.25, 7.5, 7.5, -1.25, 7.5, -7.5, -1.25, 7.5, 7.5, 1.25, -7.5, -7.5, 1.25, -7.5, 7.5, -1.25, -7.5, -7.5, 1.25, -7.5, -7.5, -1.25, -7.5, 7.5, -1.25, -7.5, 7.5, 1.25, 7.5, 7.5, 1.25, -7.5, 7.5, -1.25, 7.5, 7.5, 1.25, -7.5, 7.5, -1.25, -7.5, 7.5, -1.25, 7.5, -7.5, 1.25, -7.5, -7.5, 1.25, 7.5, -7.5, -1.25, -7.5, -7.5, 1.25, 7.5, -7.5, -1.25, 7.5, -7.5, -1.25, -7.5, 7.5, 1.25, 7.5, -7.5, 1.25, 7.5, 7.5, 1.25, -7.5, -7.5, 1.25, 7.5, -7.5, 1.25, -7.5, 7.5, 1.25, -7.5, -7.5, -1.25, 7.5, 7.5, -1.25, 7.5, -7.5, -1.25, -7.5, 7.5, -1.25, 7.5, 7.5, -1.25, -7.5, -7.5, -1.25, -7.5)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jycfv"]
+albedo_color = Color(1, 1, 0, 1)
+emission_enabled = true
+emission = Color(1, 1, 0, 1)
+emission_energy_multiplier = 11.61
+
+[sub_resource type="SphereMesh" id="SphereMesh_anbmm"]
+radius = 12000.0
+height = 24000.0
+radial_segments = 32
+rings = 16
+
 [node name="World" type="Node3D"]
 script = ExtResource("1_gkyem")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_b3pix")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
-shadow_enabled = true
-
-[node name="VoxelLodTerrain" type="VoxelLodTerrain" parent="."]
+[node name="erath" type="VoxelLodTerrain" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 81.7456, 0, 0)
 generator = ExtResource("1_rxt6g")
 mesher = SubResource("VoxelMesherTransvoxel_ocoxg")
@@ -76,7 +84,7 @@ use_gpu_generation = true
 [node name="PlanetAthmosphere" parent="." instance=ExtResource("7_4wkud")]
 planet_radius = 6371.0
 atmosphere_height = 1000.0
-sun_path = NodePath("../DirectionalLight3D")
+sun_path = NodePath("../sun/DirectionalLight3D")
 custom_shader = ExtResource("8_5go2j")
 shader_params/u_density = 0.001
 shader_params/u_day_color0 = Color(0.5, 0.8, 1, 1)
@@ -96,7 +104,8 @@ shader_params/u_cloud_shape_texture = ExtResource("9_w2dgn")
 shader_params/u_cloud_coverage_cubemap = ExtResource("10_emwew")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 6443.06, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.77003, 6443.06, 0)
+current = true
 
 [node name="VoxelViewer" type="VoxelViewer" parent="Camera3D"]
 
@@ -109,5 +118,17 @@ mesh = SubResource("BoxMesh_5bhjr")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="start_table/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_bh8bt")
 
-[node name="vab" parent="." instance=ExtResource("13_tk8pn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6446.5, 0)
+[node name="sun" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 145434, 100000, 517793)
+material_override = SubResource("StandardMaterial3D_jycfv")
+mesh = SubResource("SphereMesh_anbmm")
+
+[node name="DirectionalLight3D" type="OmniLight3D" parent="sun"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+light_energy = 200000.0
+light_specular = 0.0
+shadow_enabled = true
+omni_range = 999000.0
+
+[node name="space_ship2" parent="." instance=ExtResource("13_3jw4d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6442.4, 0)

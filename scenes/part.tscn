@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://g7muiwmv8dcg"]
+
+[ext_resource type="Script" path="res://scripts/part.gd" id="1_45ee1"]
+
+[node name="part" type="RigidBody3D"]
+script = ExtResource("1_45ee1")

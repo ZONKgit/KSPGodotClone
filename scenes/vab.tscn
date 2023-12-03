@@ -59,9 +59,40 @@ layout_mode = 2
 [node name="parts_container" type="GridContainer" parent="CanvasLayer/ui/parts_panel/parts_panel_container"]
 layout_mode = 2
 
+[node name="file_panel" type="Panel" parent="CanvasLayer/ui"]
+layout_mode = 0
+offset_left = 293.0
+offset_right = 1152.0
+offset_bottom = 83.0
+
+[node name="save_ship_button" type="Button" parent="CanvasLayer/ui/file_panel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -83.0
+offset_bottom = 83.0
+grow_horizontal = 0
+text = "Save"
+
+[node name="launch_button" type="Button" parent="CanvasLayer/ui"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -111.0
+offset_top = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Пуск!"
+
 [node name="cursor" type="MeshInstance3D" parent="."]
 visible = false
 mesh = SubResource("BoxMesh_0cg12")
 
 [connection signal="mouse_entered" from="CanvasLayer/ui/parts_panel" to="CanvasLayer/ui" method="_on_parts_panel_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/ui/parts_panel" to="CanvasLayer/ui" method="_on_parts_panel_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/ui/file_panel/save_ship_button" to="CanvasLayer/ui" method="_on_save_ship_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/ui/launch_button" to="CanvasLayer/ui" method="_on_launch_button_pressed"]

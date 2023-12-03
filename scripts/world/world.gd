@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var terrain = $VoxelLodTerrain
+@onready var terrain = $erath
 @onready var atmosphere = $PlanetAthmosphere
 
 func _ready():

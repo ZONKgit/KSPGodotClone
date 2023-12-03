@@ -1,0 +1,5 @@
+{
+	"name" : "F-100",
+	"top_attach_point" : [0,0.289,0, "norm"],
+	"bottom_attach_point" : [0,-0.289,0, "norm"]
+}

@@ -1,5 +1,6 @@
 extends Node3D
 
+@onready var world = $".."
 @onready var othogonal_camera = $camera/cameraOtrogonal
 @onready var camera = $camera/camera
 @onready var debug_cursor = $cursor
@@ -7,6 +8,7 @@ extends Node3D
 
 var cursor_position: Vector3
 var grabbed_part = null
+var ship_data = []
 
 func create_part(type: String, part: String) -> void:
 	var part_data = LoadGame.get_part_data(type, part)
@@ -34,4 +36,30 @@ func raycast_from_mouse(m_pos, collision_mask):
 	query.collide_with_areas = true
 	
 	return space_state.intersect_ray(query)
+
+func get_ship_data() -> Array:
+	var childs = get_children()
+	var parts = []
+	var new_ship_data = []
+	for child in childs:
+		if child in get_tree().get_nodes_in_group("part"):
+			parts.append(child)
+	for part in parts:
+		var part_data = {}
+		part_data["name"] = str(part.name)
+		part_data["pos"] = part.position
+		new_ship_data.append(part_data)
+	return new_ship_data
+
+func save_ship() -> void:
+	ship_data = get_ship_data()
+	# Тут должен бытькод сохранения в файл
+
+func launch_ship() -> void:
+	ship_data = get_ship_data()
+	var spaceship = preload("res://scenes/space_ship.tscn").instantiate()
+	spaceship.ship_data = ship_data
+	spaceship.global_position = global_position
+	world.add_child(spaceship)
+	
 
