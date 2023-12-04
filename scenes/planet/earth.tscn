@@ -17,13 +17,13 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3xfu6"]
 render_priority = 0
 shader = ExtResource("3_etkq3")
-shader_parameter/u_transition_mask = null
-shader_parameter/u_lod_fade = null
-shader_parameter/u_voxel_virtual_texture_tile_size = null
-shader_parameter/u_voxel_virtual_texture_fade = null
-shader_parameter/u_voxel_cell_size = null
-shader_parameter/u_voxel_block_size = null
-shader_parameter/u_voxel_virtual_texture_offset_scale = null
+shader_parameter/u_transition_mask = 0
+shader_parameter/u_lod_fade = Vector2(0, 0)
+shader_parameter/u_voxel_virtual_texture_tile_size = 0
+shader_parameter/u_voxel_virtual_texture_fade = 0.0
+shader_parameter/u_voxel_cell_size = 0.0
+shader_parameter/u_voxel_block_size = 0
+shader_parameter/u_voxel_virtual_texture_offset_scale = Vector4(0, 0, 0, 0)
 shader_parameter/u_mountain_height = 10000.0
 shader_parameter/u_top_modulate = Color(1, 1, 1, 1)
 shader_parameter/u_block_local_transform = null
@@ -127,9 +127,9 @@ texture_filter = 2
 
 [node name="earth" type="StaticBody3D"]
 script = ExtResource("1_5oh5n")
+mass = 5978
 
 [node name="terrain" type="VoxelLodTerrain" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 81.7456, 0, 0)
 generator = ExtResource("2_fyyaf")
 mesher = SubResource("VoxelMesherTransvoxel_ynxpy")
 view_distance = 16384
@@ -137,12 +137,13 @@ voxel_bounds = AABB(-16384, -16384, -16384, 32768, 32768, 32768)
 lod_count = 7
 lod_distance = 32.0
 material = SubResource("ShaderMaterial_3xfu6")
-run_stream_in_editor = false
+threaded_update_enabled = true
 
 [node name="PlanetAthmosphere" parent="." instance=ExtResource("8_1pqpo")]
-planet_radius = 6370.0
-atmosphere_height = 1000.0
+planet_radius = 737.0
+atmosphere_height = 100.0
 custom_shader = ExtResource("9_0k2os")
+clouds_rotation_speed = 1.475
 shader_params/u_density = 0.001
 shader_params/u_day_color0 = Color(0.5, 0.8, 1, 1)
 shader_params/u_day_color1 = Color(0.5, 0.8, 1, 1)

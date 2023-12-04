@@ -144,7 +144,7 @@ graph_data = {
 "type": "InputZ"
 },
 "40": {
-"b": 1500.0,
+"b": 537.1,
 "gui_position": Vector2(-60, 1140),
 "name": &"cave_height_subtract",
 "type": "Subtract"
@@ -202,7 +202,7 @@ graph_data = {
 "auto_connect": true,
 "gui_position": Vector2(160, 40),
 "name": &"sphere",
-"radius": 6371.0,
+"radius": 637.1,
 "type": "SdfSphere"
 }
 },

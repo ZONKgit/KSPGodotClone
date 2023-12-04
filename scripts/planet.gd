@@ -1,11 +1,11 @@
 extends StaticBody3D
 class_name PlanetBody
 
-@export var mass = 5978
+@export var mass = 5978*10
 
 var body = {
 	"name" : "Planet",
-	"radius" : 6371,
+	"radius" : 637.1,
 }
 
 @onready var terrain = $terrain
@@ -32,9 +32,9 @@ func _physics_process(delta):
 		
 		var distance: float = global_position.distance_to(body.global_position)
 		var strenght: float = 9.8*(body.mass * mass) / (distance*distance)
-		body.linear_velocity += direction_to_planert*strenght
+		body.apply_impulse(direction_to_planert*strenght, body.global_position)
 
-	
+func _ready():
 	$PlanetAthmosphere.sun_path = "../sun/DirectionalLight3D"
 	setup_planet()
 	

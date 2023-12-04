@@ -12,4 +12,4 @@ domain_warp_fractal_octaves = 2
 script = ExtResource("1_rrjhd")
 noise = SubResource("FastNoiseLite_p3aaq")
 resolution = 256
-scale = Vector3(100, 200, 100)
+scale = Vector3(100, 100, 100)

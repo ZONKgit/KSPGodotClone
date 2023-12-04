@@ -30,9 +30,7 @@ var trust_sensitivity: float = 0.1 # Скорость изменение уро�
 var trust_level: float = 0 # Урвоень тяги
 var gyrodine_strenght: float = 0.05 # Сила гиродина (Надо зпменить на 0 как только появяться модули гиродина и командные блоки)
 
-var time_speed: int # Ускорение времени
-
-var time = 0
+var time_speed: int = 1 # Ускорение времени
 
 func generate_line_mesh(points: Array, color: Color):
 	var immediate_mesh = ImmediateMesh.new()
@@ -45,14 +43,10 @@ func generate_line_mesh(points: Array, color: Color):
 	
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	material.albedo_color = color
-	
+
 	return immediate_mesh
 
 
-func _process(delta):
-	time+=delta
-	if time == int(time):
-		print(time)
 	
 
 func _physics_process(delta):
@@ -66,7 +60,6 @@ func update_ui() -> void:
 func _ready():
 	continuous_cd = true # Включение детального анализа столкновений
 	load_craft()
-	$line.mesh = generate_line_mesh([Vector3(0,0,0), Vector3(0,1,0), Vector3(1,0,1)], Color8(1,0,0))
 func load_craft() -> void:
 	for detail in ship_data:
 		create_part(detail)
@@ -99,14 +92,14 @@ func _input(event):
 			
 	# Управление вращением
 	if Input.is_action_pressed("pitch_add"):
-		apply_torque_impulse(rotation+Vector3(10,0,0))
+		apply_torque_impulse(rotation+global_transform.basis.x*10)
 	elif Input.is_action_pressed("pitch_remove"):
-		apply_torque_impulse(rotation+Vector3(-10,0,0))
+		apply_torque_impulse(rotation+-global_transform.basis.x*10)
 	if Input.is_action_pressed("yaw_add"):
-		apply_torque_impulse(rotation+Vector3(0,0,10))
+		apply_torque_impulse(rotation+global_transform.basis.z*10)
 	elif Input.is_action_pressed("yaw_remove"):
-		apply_torque_impulse(rotation+Vector3(0,0,-10))
+		apply_torque_impulse(rotation+-global_transform.basis.z*10)
 	if Input.is_action_pressed("roll_add"):
-		apply_torque_impulse(rotation+Vector3(0,10,0))
+		apply_torque_impulse(rotation+global_transform.basis.y*10)
 	elif Input.is_action_pressed("roll_remove"):
-		apply_torque_impulse(rotation+Vector3(0,-10,0))
+		apply_torque_impulse(rotation+-global_transform.basis.y*10)
