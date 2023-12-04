@@ -1,0 +1,50 @@
+[gd_scene load_steps=10 format=3 uid="uid://iakche8uoei8"]
+
+[ext_resource type="PackedScene" uid="uid://mbukhu46p62t" path="res://scenes/part/EmptyPart.tscn" id="1_3kiiu"]
+[ext_resource type="Script" path="res://scripts/part_class/liquid_engine.gd" id="2_xi2he"]
+
+[sub_resource type="Gradient" id="Gradient_scxol"]
+offsets = PackedFloat32Array(0, 0.495935, 1)
+colors = PackedColorArray(1, 1, 0, 0, 1, 0, 0, 0.529412, 1, 0, 1, 0.427451)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xrt7t"]
+gradient = SubResource("Gradient_scxol")
+
+[sub_resource type="Curve" id="Curve_pjerh"]
+_data = [Vector2(0, 0.231579), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_uyjmy"]
+curve = SubResource("Curve_pjerh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_utgk7"]
+direction = Vector3(0, -1, 0)
+spread = 15.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+scale_curve = SubResource("CurveTexture_uyjmy")
+color_ramp = SubResource("GradientTexture1D_xrt7t")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wqmxa"]
+transparency = 1
+vertex_color_use_as_albedo = true
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_p74lh"]
+material = SubResource("StandardMaterial3D_wqmxa")
+
+[node name="emptyLiquidEngine" instance=ExtResource("1_3kiiu")]
+script = ExtResource("2_xi2he")
+thrust = 0.0683867
+isp = 0.0883333
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+amount = 128
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_utgk7")
+draw_pass_1 = SubResource("QuadMesh_p74lh")

@@ -18,6 +18,9 @@ func install() -> void:
 	var static_body = model.get_child(0)
 	static_body.remove_child(collision)
 	get_parent().add_child(collision)
+	collision.position = position
+	# Передача массы
+	get_parent().mass += mass
 
 func _ready():
 	install()

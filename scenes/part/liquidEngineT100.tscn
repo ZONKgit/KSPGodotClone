@@ -1,10 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://bw2dco22puat7"]
 
-[ext_resource type="PackedScene" uid="uid://iakche8uoei8" path="res://scenes/part/empryLiquidEngine.tscn" id="1_0jthq"]
+[ext_resource type="PackedScene" uid="uid://iakche8uoei8" path="res://scenes/part/emptyLiquidEngine.tscn" id="1_1tqim"]
 [ext_resource type="ArrayMesh" uid="uid://bet307kkec862" path="res://Parts/engine/T-100/model.obj" id="2_bd6sf"]
 
-[node name="liquidEngineT100" instance=ExtResource("1_0jthq")]
-trust = 10.0
+[node name="liquidEngineT100" instance=ExtResource("1_1tqim")]
+mass = 125.0
+thrust = 0.41032
+isp = 0.53
 
 [node name="MeshInstance3D" parent="." index="0"]
 mesh = ExtResource("2_bd6sf")
+
+[node name="GPUParticles3D" parent="." index="1"]
+visible = false

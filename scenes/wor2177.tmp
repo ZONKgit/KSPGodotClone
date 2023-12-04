@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scripts/world/world.gd" id="1_gkyem"]
 [ext_resource type="Texture2D" uid="uid://q00sxk0oimuv" path="res://textures/space_background.png" id="2_n838u"]
 [ext_resource type="PackedScene" uid="uid://c1tei58gm8yng" path="res://scenes/planet/earth.tscn" id="4_lrner"]
+[ext_resource type="Script" path="res://scripts/space_ship_camera.gd" id="5_70w4l"]
 [ext_resource type="PackedScene" uid="uid://nvf06v2vrvb8" path="res://scenes/space_ship.tscn" id="13_3jw4d"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3anpg"]
@@ -35,12 +36,6 @@ radius = 694439.0
 height = 1.38888e+06
 radial_segments = 16
 rings = 8
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tqruj"]
-shading_mode = 2
-emission_enabled = true
-emission = Color(1, 1, 1, 1)
-emission_energy_multiplier = 16.0
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_gkyem")
@@ -76,11 +71,14 @@ shadow_enabled = true
 omni_range = 9.99e+08
 
 [node name="space_ship2" parent="." instance=ExtResource("13_3jw4d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6445.59, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6442.4, 0)
 
 [node name="earth" parent="." instance=ExtResource("4_lrner")]
 
-[node name="space_ship_traj" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_tqruj")
+[node name="space_ship_camera" type="Marker3D" parent="."]
+transform = Transform3D(0.866025, 0.202659, -0.457088, -0.5, 0.351015, -0.7917, 0, 0.914176, 0.405317, 0, 0, 8847.52)
+script = ExtResource("5_70w4l")
 
-[node name="update_traj" type="Timer" parent="."]
+[node name="Camera3D" type="Camera3D" parent="space_ship_camera"]
+current = true
+far = 260000.0

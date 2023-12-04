@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://iakche8uoei8"]
-
-[ext_resource type="PackedScene" uid="uid://mbukhu46p62t" path="res://scenes/part/EmptyPart.tscn" id="1_v5k4f"]
-[ext_resource type="Script" path="res://scripts/part_class/liquid_engine.gd" id="2_c8nqe"]
-
-[node name="empryLiquidEngine" instance=ExtResource("1_v5k4f")]
-script = ExtResource("2_c8nqe")
-trust = 0.0

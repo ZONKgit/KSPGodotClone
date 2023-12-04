@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c7l83hu3qqfab"]
+[gd_scene load_steps=12 format=3 uid="uid://c7l83hu3qqfab"]
 
 [ext_resource type="Script" path="res://scripts/world/world.gd" id="1_gkyem"]
 [ext_resource type="Texture2D" uid="uid://q00sxk0oimuv" path="res://textures/space_background.png" id="2_n838u"]
@@ -36,12 +36,6 @@ height = 1.38888e+06
 radial_segments = 16
 rings = 8
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tqruj"]
-shading_mode = 2
-emission_enabled = true
-emission = Color(1, 1, 1, 1)
-emission_energy_multiplier = 16.0
-
 [node name="World" type="Node3D"]
 script = ExtResource("1_gkyem")
 
@@ -76,11 +70,6 @@ shadow_enabled = true
 omni_range = 9.99e+08
 
 [node name="space_ship2" parent="." instance=ExtResource("13_3jw4d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6445.59, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6442.4, 0)
 
 [node name="earth" parent="." instance=ExtResource("4_lrner")]
-
-[node name="space_ship_traj" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_tqruj")
-
-[node name="update_traj" type="Timer" parent="."]

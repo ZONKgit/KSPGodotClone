@@ -1,0 +1,81 @@
+[gd_scene load_steps=9 format=3 uid="uid://ntuajh1bk3nk"]
+
+[ext_resource type="Texture2D" uid="uid://dyacncc1nr5ti" path="res://textures/ui/spacecraft/nav_sphere.png" id="1_vka2p"]
+[ext_resource type="Texture2D" uid="uid://12r3rnypmfed" path="res://textures/ui/spacecraft/nav_sphere_cursor.svg" id="2_ukxn4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3g8cw"]
+albedo_texture = ExtResource("1_vka2p")
+uv1_offset = Vector3(-0.5, 0, 0)
+
+[sub_resource type="SphereMesh" id="SphereMesh_o2j46"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_snow6"]
+
+[sub_resource type="Sky" id="Sky_fjkc5"]
+sky_material = SubResource("ProceduralSkyMaterial_snow6")
+
+[sub_resource type="Environment" id="Environment_8u6ur"]
+background_mode = 2
+background_energy_multiplier = 2.0
+sky = SubResource("Sky_fjkc5")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_do78p"]
+viewport_path = NodePath("SubViewport")
+
+[node name="nav_sphere" type="Node3D"]
+
+[node name="nav_sphere" type="MeshInstance3D" parent="."]
+layers = 2
+material_override = SubResource("StandardMaterial3D_3g8cw")
+mesh = SubResource("SphereMesh_o2j46")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+cull_mask = 1047554
+environment = SubResource("Environment_8u6ur")
+projection = 1
+size = 0.22
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -83.0
+offset_top = -164.0
+offset_right = 83.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="sphere" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_do78p")
+expand_mode = 1
+
+[node name="cursor" type="TextureRect" parent="Control"]
+modulate = Color(0.945098, 0.666667, 0, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.0
+offset_top = -4.0
+offset_right = 7.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ukxn4")
